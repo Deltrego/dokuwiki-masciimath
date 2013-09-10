@@ -1,0 +1,7 @@
+base   MAsciiMath
+author Morten Nielsen
+email  mortenb@gmail.com
+date   2013-09-01
+name   MAsciiMath
+desc   Stand-alone parser of ASCIIMathML for DokuWiki into MathML
+url    http://www.dokuwiki.org/wiki:plugins
