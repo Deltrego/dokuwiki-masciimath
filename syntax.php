@@ -2,19 +2,6 @@
 /**
  * @license    GPL 2 (http://www.gnu.org/licenses/gpl.html)
  * @author     Morten Nielsen <mortenb@gmail.com>
- *
- * MortenB's implementation of Peter Jipsen's ASCIIMathML.js
- * In pure PHP (no JavaScript necessary)
- *
- *  Known bugs/variations from the reference implementation:
- *   - Does not recognize double dollars form, only backticks, i.e. does not recognize $$a=b+c$$, only `a=b+c`
- *   - Does not recognize the form `text{mintekst}`, only `"mintekst"`
- *   - Does not recognize LaTeX-style syntax, i.e. \Alpha for Alpha
- *   - Uses only (: and :) for angular brackets. The official documentation is ambigious, using sometimes (: and :), sometimes << and >>
- *     The latter are used for "much greater than" and "much less than" here.
- *   - Recognizes the forms `int_0^1` and `int^1_0` as equivalent, etc.
- *   - Recognizes all standard Greek letters (i.e. Alpha and gamma), uppercase and lowercase, whereas the official only recognizes a subset
- *   - Defaults to displaystyle=false (inline style). However, displaystyle=true can be trigged by including a single whitespace as the first character, such as: ` int_0^x x`
  * 
  */
 
