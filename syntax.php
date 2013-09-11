@@ -391,10 +391,10 @@ class syntax_plugin_masciimath extends DokuWiki_Syntax_Plugin {
             }
             # Returner string med og uden paranteser
             $ml = '<mrow>' . $leftbracket['ml'] . $ml_nobr . $rightbracket['ml'] . '</mrow>';
-            if (($leftbracket['ascii'] == '|') and ($rightbracket['ascii'] == '|')) {
-                $ml_nobr = $ml;
-            } else {
+            if (($leftbracket['ascii'] == '(') and ($rightbracket['ascii'] == ')')) {
                 $ml_nobr = '<mrow>' . $ml_nobr . '</mrow>';
+            } else {
+                $ml_nobr = $ml;
             }
             #error_log ('PARANTES: (row: ' . count($row) . ') ' . $ml);
             return compact ('ml', 'ml_nobr', 'row');
