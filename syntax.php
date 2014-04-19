@@ -227,6 +227,7 @@ class syntax_plugin_masciimath extends DokuWiki_Syntax_Plugin {
         array ('ascii' => '¾', 'ml' => '<mn>&frac34;</mn>'),
         array ('ascii' => 'dx', 'ml' => '<mrow><mi>d</mi><mi>x</mi></mrow>'),  # denne form fremtvinger italics
         array ('ascii' => 'dy', 'ml' => '<mrow><mi>d</mi><mi>y</mi></mrow>'),
+        array ('ascii' => 'dz', 'ml' => '<mrow><mi>d</mi><mi>z</mi></mrow>'),
         array ('ascii' => 'dt', 'ml' => '<mrow><mi>d</mi><mi>t</mi></mrow>'),
 
         // Greek letters
@@ -501,7 +502,10 @@ class syntax_plugin_masciimath extends DokuWiki_Syntax_Plugin {
         if (substr ($match, 1, 1) == ' ') { $displaystyle = 'true'; } else { $displaystyle = 'false'; }
         #error_log ('------ HANDLE -------');
         $parsed = $this->parse(null, array('master' => true));
-	    return '<math xmlns="http://www.w3.org/1998/Math/MathML" title="'.htmlentities ($match).'" displaystyle="'.$displaystyle.'">'.$parsed['ml'].'</math>';
+        $return = '<math xmlns="http://www.w3.org/1998/Math/MathML" title="'.htmlentities ($match).'" displaystyle="'.$displaystyle.'">'.$parsed['ml'].'</math>';
+        $return = '<span pos="' . $pos . '" len="' . strlen($match) . '">' . $return . '</span>';   // wrappes i span aht mdblclick
+	    return $return;
+         
 	}
 
     function render($mode, &$renderer, $data) {
