@@ -33,8 +33,9 @@ class syntax_plugin_masciimath extends DokuWiki_Syntax_Plugin {
         #      'infix' er operatorer som ^, _, /, og //
         #      'unary' er operatorer som sqrt, hat og fr
         #      'binary' er operatorer som 'root' og 'stackrel'
-        #      'func' er operatorer som int, sum og sin
-        #      'func_uo' er operatorer som prod og lim, der foretrækker at have sub/super-script stående "under/over" sig
+        #      'func' er operatorer som sin, cos og lim (der binder stærkt)
+        #      'magnum' er operatorer som int, sum og prod (der binder svagt)
+        #   'underover' er sand for operatorer som prod og lim, der foretrækker at have sub/super-script stående "under/over" sig
         #   'wrap_left' og 'wrap_right' forklarer hvordan en operator implementeres
 
         // Signs ('sign')
@@ -160,15 +161,15 @@ class syntax_plugin_masciimath extends DokuWiki_Syntax_Plugin {
         array ('ascii' => 'sf', 'type' => 'unary', 'wrap_left' => '<mstyle mathvariant="sans-serif">', 'wrap_right' => '</mstyle>'),
 
         // Magnum operators
-        array ('ascii' => 'sum', 'ml' => '<mo>&sum;</mo>', 'type' => 'func_uo'),
-        array ('ascii' => 'prod', 'ml' => '<mo>&prod;</mo>', 'type' => 'func_uo'),
-        array ('ascii' => '^^^', 'ml' => '<mo>&#x22C0;</mo>', 'type' => 'func_uo'),
-        array ('ascii' => 'vvv', 'ml' => '<mo>&#x22C1;</mo>', 'type' => 'func_uo'),
-        array ('ascii' => 'nnn', 'ml' => '<mo>&#x22C2;</mo>', 'type' => 'func_uo'),
-        array ('ascii' => 'uuu', 'ml' => '<mo>&#x22C3;</mo>', 'type' => 'func_uo'),
-        array ('ascii' => 'int', 'ml' => '<mo>&int;</mo>', 'type' => 'func'),
-        array ('ascii' => 'oint', 'ml' => '<mo>&#x222E;</mo>', 'type' => 'func'),
-        array ('ascii' => 'ointoint', 'ml' => '<mo>&#x222F;</mo>', 'type' => 'func'),   # MortenB's idea
+        array ('ascii' => 'sum', 'ml' => '<mo>&sum;</mo>', 'type' => 'magnum', 'underover' => true),
+        array ('ascii' => 'prod', 'ml' => '<mo>&prod;</mo>', 'type' => 'magnum', 'underover' => true),
+        array ('ascii' => '^^^', 'ml' => '<mo>&#x22C0;</mo>', 'type' => 'magnum', 'underover' => true),
+        array ('ascii' => 'vvv', 'ml' => '<mo>&#x22C1;</mo>', 'type' => 'magnum', 'underover' => true),
+        array ('ascii' => 'nnn', 'ml' => '<mo>&#x22C2;</mo>', 'type' => 'magnum', 'underover' => true),
+        array ('ascii' => 'uuu', 'ml' => '<mo>&#x22C3;</mo>', 'type' => 'magnum', 'underover' => true),
+        array ('ascii' => 'int', 'ml' => '<mo>&int;</mo>', 'type' => 'magnum'),
+        array ('ascii' => 'oint', 'ml' => '<mo>&#x222E;</mo>', 'type' => 'magnum'),
+        array ('ascii' => 'ointoint', 'ml' => '<mo>&#x222F;</mo>', 'type' => 'magnum'),   # MortenB's idea
 
         // Standard functions
         array ('ascii' => 'sin', 'ml' => '<mi>sin</mi>', 'type' => 'func'),
@@ -192,9 +193,9 @@ class syntax_plugin_masciimath extends DokuWiki_Syntax_Plugin {
         array ('ascii' => 'det', 'ml' => '<mi>det</mi>', 'type' => 'func'),
         array ('ascii' => 'dim', 'ml' => '<mi>dim</mi>', 'type' => 'func'),
         array ('ascii' => 'mod', 'ml' => '<mi>mod</mi>', 'type' => 'func'),
-        array ('ascii' => 'min', 'ml' => '<mi>min</mi>', 'type' => 'func_uo'),
-        array ('ascii' => 'max', 'ml' => '<mi>max</mi>', 'type' => 'func_uo'),
-        array ('ascii' => 'lim', 'ml' => '<mi>lim</mi>', 'type' => 'func_uo'),
+        array ('ascii' => 'min', 'ml' => '<mi>min</mi>', 'type' => 'func', 'underover' => true),
+        array ('ascii' => 'max', 'ml' => '<mi>max</mi>', 'type' => 'func', 'underover' => true),
+        array ('ascii' => 'lim', 'ml' => '<mi>lim</mi>', 'type' => 'func', 'underover' => true),
 
         // Simple symbols
         array ('ascii' => '\'', 'ml' => '<mo>\'</mo>'), # single quote
@@ -225,10 +226,10 @@ class syntax_plugin_masciimath extends DokuWiki_Syntax_Plugin {
         array ('ascii' => '½', 'ml' => '<mn>&frac12;</mn>'),
         array ('ascii' => '(3/4)', 'ml' => '<mn>&frac34;</mn>'),
         array ('ascii' => '¾', 'ml' => '<mn>&frac34;</mn>'),
-        array ('ascii' => 'dx', 'ml' => '<mrow><mi>d</mi><mi>x</mi></mrow>'),  # denne form fremtvinger italics
-        array ('ascii' => 'dy', 'ml' => '<mrow><mi>d</mi><mi>y</mi></mrow>'),
-        array ('ascii' => 'dz', 'ml' => '<mrow><mi>d</mi><mi>z</mi></mrow>'),
-        array ('ascii' => 'dt', 'ml' => '<mrow><mi>d</mi><mi>t</mi></mrow>'),
+        array ('ascii' => 'dx', 'ml' => '<mrow><mspace width="0.3em"/><mi>d</mi><mi>x</mi></mrow>'),  # denne form fremtvinger italics, og nbsp pynter
+        array ('ascii' => 'dy', 'ml' => '<mrow><mspace width="0.3em"/><mi>d</mi><mi>y</mi></mrow>'),
+        array ('ascii' => 'dz', 'ml' => '<mrow><mspace width="0.3em"/><mi>d</mi><mi>z</mi></mrow>'),
+        array ('ascii' => 'dt', 'ml' => '<mrow><mspace width="0.3em"/><mi>d</mi><mi>t</mi></mrow>'),
 
         // Greek letters
         array ('ascii' => 'Alpha', 'ml' => '<mi>&Alpha;</mi>'),
@@ -416,11 +417,11 @@ class syntax_plugin_masciimath extends DokuWiki_Syntax_Plugin {
             return compact ('ml', 'ml_nobr');
         }
 
-        # Funktionsudtryk
-        if (($sym['type'] == 'func') or ($sym['type'] == 'func_uo')) {
+        # Standardfunktioner (som sin og cos, binder stærkt)
+        if ($sym['type'] == 'func') {
             $old = $sym;
             $new = $this->parse($sym, null);
-            while (isset ($new['from'])) {  # fang sub- og superscripts til funktioner før selve argumentet
+            while (isset ($new['from'])) { # fang sub- og superscripts til funktioner før selve argumentet
                 $old = $new;
                 $new = $this->parse($new, null);
             }
@@ -430,7 +431,6 @@ class syntax_plugin_masciimath extends DokuWiki_Syntax_Plugin {
         }
 
         # Infix-operatorer
-        # Eksempel på positioner:
         if ($sym['type'] == 'infix') {
             if ($situation['first_in_row']) {
                 # Ydertilfælde som `^x` og `_y`. Skal bare reddes.
@@ -445,18 +445,22 @@ class syntax_plugin_masciimath extends DokuWiki_Syntax_Plugin {
             $pos4 = $sym;                              #  `   _ `
             $pos5 = $new = $this->parse($sym, null);   #  `    z`
             $op = $sym['ascii'];
+            $bundtype = isset($prevsym['bundtype']) ? $prevsym['bundtype'] : $prevsym['type'];           # fx 'magnum' (går i arv)
             if ((($op == '_') or ($op == '^')) and (($pos2['ascii'] == '/') or ($pos2['ascii'] == '//'))) {
                 # Tilfældet `x/y_z` eller `x/y^z`
                 $ml = $pos2['wrap_left'] . $pos1['ml_nobr'] . $pos4['wrap_left'] . $pos3['ml'] . $pos5['ml_nobr'] . $pos4['wrap_right'] . $pos2['wrap_right'];
-            } elseif (($op == '^') and ($pos2['ascii'] == '_') and ($pos1['type'] == 'func_uo')) {
+            } elseif (($op == '^') and ($pos2['ascii'] == '_') and ($pos1['underover'])) {
                 # Tilfældet `prod_y^z`
                 $ml = '<munderover>' . $pos1['ml'] . $pos3['ml_nobr'] . $pos5['ml_nobr'] . '</munderover>';
-            } elseif (($op == '_') and ($pos2['ascii'] == '^') and ($pos1['type'] == 'func_uo')) {
+            } elseif (($op == '_') and ($pos2['ascii'] == '^') and ($pos1['underover'])) {
                 # Tilfældet `prod^y_z`
                 $ml = '<munderover>' . $pos1['ml'] . $pos5['ml_nobr'] . $pos3['ml_nobr'] . '</munderover>';
-            } elseif (($op == '_') and ($prevsym['type'] == 'func_uo')) {
+            } elseif (($op == '_') and ($prevsym['underover'])) {
                 # Tilfældet `prod_z`
                 $ml = '<munder>' . $prevsym['ml'] . $new['ml_nobr'] . '</munder>';
+            } elseif (($op == '^') and ($prevsym['underover'])) {
+                # Tilfældet `prod^z`
+                $ml = '<mover>' . $prevsym['ml'] . $new['ml_nobr'] . '</mover>';
             } elseif (($op == '^') and ($pos2['ascii'] == '_')) {
                 # Tilfældet `x_y^z`  (eneste som asciimathml.js genkender)
                 $ml = '<msubsup>' . $pos1['ml'] . $pos3['ml_nobr'] . $pos5['ml_nobr'] . '</msubsup>';
@@ -471,12 +475,14 @@ class syntax_plugin_masciimath extends DokuWiki_Syntax_Plugin {
             } else msg ('Dunno how I got here!');
             $from = array($prevsym, $sym, $new);
             $ml_nobr = $ml;
-            return compact ('ml', 'ml_nobr', 'from');
+            return compact ('ml', 'ml_nobr', 'from', 'bundtype');
         }
 
         # Signs (minus og plusminus)
         if ($sym['type'] == 'sign') {
-            if (($situation['first_in_row']) or (! $situation['in_row']) or ($prevsym['type'] == 'op')) {
+            if (($situation['first_in_row']) or (! $situation['in_row']) or ($prevsym['type'] == 'op') or ($prevsym['bundtype'] == 'magnum')) {
+                # Brug fortegnsversionen af symbolet i tilfælde hvor 1) symbolet optræder allerførst i parantes/globalt, 2) symbolet optræder som argument til operator (!in_row),
+                # 3) symbolet optræder efter simpel inline-operator, eller 4) efter infix-symbolkæde med bundtype magnum (dvs i praksis magnum-operator med index)
                 $new = $this->parse($sym, null);
                 $ml = $ml_nobr = '<mrow>' . $sym['ml_sign'] . $new['ml'] . '</mrow>';
                 if ($new['ml'] != '<mspace />') return compact ('ml', 'ml_nobr');
