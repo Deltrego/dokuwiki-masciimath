@@ -509,6 +509,8 @@ class syntax_plugin_masciimath extends DokuWiki_Syntax_Plugin {
         #error_log ('------ HANDLE -------');
         $parsed = $this->parse(null, array('master' => true));
         $return = '<math xmlns="http://www.w3.org/1998/Math/MathML" title="'.htmlentities ($match).'" displaystyle="'.$displaystyle.'">'.$parsed['ml'].'</math>';
+        # HER FØLGER TO NØDLØSNINGER SPECIFIKT TIL MORTEN:
+        $return = str_replace('<mi>', '<mi mathvariant=sans-serif-italic>', $return);               // i nyere tid eneste måde at få sans-serif!
         $return = '<span pos="' . $pos . '" len="' . strlen($match) . '">' . $return . '</span>';   // wrappes i span aht mdblclick
 	    return $return;
          
